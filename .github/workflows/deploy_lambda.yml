@@ -6,10 +6,11 @@ on:
       FILE_NAME:
         required: true
         type: string
+      AWS_REGION:
+        required: true
+        type: string
     secrets:
       AWS_ROLE_ARN:
-        required: true
-      AWS_REGION:
         required: true
 
 jobs:
@@ -31,7 +32,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ${{ inputs.AWS_REGION }}
 
       - name: Package and Deploy Lambda function
         run: |
