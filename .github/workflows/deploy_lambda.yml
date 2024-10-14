@@ -5,6 +5,7 @@ on:
     inputs:
       FILE_NAME:
         required: true
+        type: string
     secrets:
       AWS_ROLE_ARN:
         required: true
@@ -34,5 +35,5 @@ jobs:
 
       - name: Package and Deploy Lambda function
         run: |
-          zip ${{ secrets.FILE_NAME }}.zip ${{ secrets.FILE_NAME }}.py
-          aws lambda update-function-code --function-name ${{ secrets.FILE_NAME }} --zip-file fileb://${{ secrets.FILE_NAME }}.zip
+          zip ${{ inputs.FILE_NAME }}.zip ${{ inputs.FILE_NAME }}.py
+          aws lambda update-function-code --function-name ${{ inputs.FILE_NAME }} --zip-file fileb://${{ inputs.FILE_NAME }}.zip
