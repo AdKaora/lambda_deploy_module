@@ -52,6 +52,10 @@ on:
   push:
     branches:
       - master
+      
+permissions:
+  id-token: write      # Permesso necessario per OIDC
+  contents: read
 
 jobs:
   deploy_lambda:
