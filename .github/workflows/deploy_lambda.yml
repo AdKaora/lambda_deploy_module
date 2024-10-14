@@ -6,6 +6,9 @@ on:
       FILE_NAME:
         required: true
         type: string
+      LAMBDA_NAME:
+        required: true
+        type: string
       AWS_REGION:
         required: true
         type: string
@@ -36,5 +39,5 @@ jobs:
 
       - name: Package and Deploy Lambda function
         run: |
-          zip ${{ inputs.FILE_NAME }}.zip ${{ inputs.FILE_NAME }}.py
-          aws lambda update-function-code --function-name ${{ inputs.FILE_NAME }} --zip-file fileb://${{ inputs.FILE_NAME }}.zip
+          zip ${{ inputs.FILE_NAME }}.zip ${{ inputs.FILE_NAME }}
+          aws lambda update-function-code --function-name ${{ inputs.LAMBDA_NAME }} --zip-file fileb://${{ inputs.FILE_NAME }}.zip
