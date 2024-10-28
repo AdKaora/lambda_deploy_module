@@ -11,7 +11,6 @@ on:
         type: string
       AWS_REGION:
         required: true
-        type: string
     secrets:
       AWS_ROLE_ARN:
         required: true
@@ -19,7 +18,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     permissions:
       id-token: write
       contents: read
@@ -44,5 +43,10 @@ jobs:
 
       - name: Package and Deploy Lambda function
         run: |
-          zip ${{ inputs.FILE_NAME }}.zip ${{ inputs.FILE_NAME }}
-          aws lambda update-function-code --function-name ${{ inputs.LAMBDA_NAME }} --zip-file fileb://${{ inputs.FILE_NAME }}.zip
+          #!/bin/bash
+          IFS=',' read -ra FILES <<< "${{ inputs.FILE_NAME }}"
+          ZIP_FILE="${{ inputs.LAMBDA_NAME }}.zip"
+          zip "$ZIP_FILE" "${FILES[@]}"
+          aws lambda update-function-code \
+            --function-name "${{ inputs.LAMBDA_NAME }}" \
+            --zip-file "fileb://$ZIP_FILE"
