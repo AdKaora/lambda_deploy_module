@@ -10,6 +10,7 @@ on:
         required: true
         type: string
       AWS_REGION:
+        type: string
         required: true
     secrets:
       AWS_ROLE_ARN:
