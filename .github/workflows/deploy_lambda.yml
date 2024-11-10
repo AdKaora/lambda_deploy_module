@@ -47,7 +47,7 @@ jobs:
           #!/bin/bash
           IFS=',' read -ra FILES <<< "${{ inputs.FILE_NAME }}"
           ZIP_FILE="${{ inputs.LAMBDA_NAME }}.zip"
-          zip "$ZIP_FILE" "${FILES[@]}"
+          zip -r "$ZIP_FILE" "${FILES[@]}"
           aws lambda update-function-code \
             --function-name "${{ inputs.LAMBDA_NAME }}" \
             --zip-file "fileb://$ZIP_FILE"
